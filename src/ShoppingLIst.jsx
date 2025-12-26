@@ -6,9 +6,19 @@ const ShoppingList = function () {
 
   const handleFormSubmit = function (e) {
     e.preventDefault();
-    // console.log('Yes!');
 
-    setItems([...items, inpValue]);
+    // Prevent adding empty strings or just whitespace(s)
+    if (!inpValue.trim()) return;
+
+    // Good, but can be better
+    // setItems([...items, { id: crypto.randomUUID(), inpValue }]);
+
+    // Great, Functional Update Pattern for more safety
+    setItems(prevItems => [
+      ...prevItems,
+      { id: crypto.randomUUID(), text: inpValue.trim() },
+    ]);
+
     setInpValue('');
   };
 
@@ -40,27 +50,39 @@ const ShoppingList = function () {
         <ul className='list-items mt-[5vh] space-y-1.5'>
           {/* <li className='flex justify-between items-center'>
             <span className=' p-0.5'>Yam</span>
-            <button className=' p-0.5 text-xl font-semibold cursor-pointer'>
+            <button className=' p-0.5 text-xl font-semibold cursor-pointer' aria-label='Delete item'>
               X
             </button>
           </li>
           <li className='flex justify-between items-center'>
             <span className=' p-0.5'>Yam</span>
-            <button className=' p-0.5 text-xl font-semibold cursor-pointer'>
+            <button className=' p-0.5 text-xl font-semibold cursor-pointer' aria-label='Delete item'>
               X
             </button>
           </li>
           <li className='flex justify-between items-center'>
             <span className=' p-0.5'>Yam</span>
-            <button className=' p-0.5 text-xl font-semibold cursor-pointer'>
+            <button className=' p-0.5 text-xl font-semibold cursor-pointer' aria-label='Delete item'>
               X
             </button>
           </li> */}
 
           {items.map(item => (
-            <li key={item} className='flex justify-between items-center'>
-              <span className=' p-0.5'>{item}</span>
-              <button className=' p-0.5 text-xl font-semibold cursor-pointer'>
+            <li key={item.id} className='flex justify-between items-center'>
+              <span className='p-0.5'>{item.text}</span>
+              <button
+                onClick={() => {
+                  // Works fine, but has a limit
+                  // setItems(items.filter(itm => itm.id !== item.id));
+
+                  // More Robust: The Functional Update Pattern
+                  setItems(prevItems =>
+                    prevItems.filter(itm => itm.id !== item.id)
+                  );
+                }}
+                className='p-0.5 text-xl font-semibold cursor-pointer'
+                aria-label='Delete item'
+              >
                 X
               </button>
             </li>
