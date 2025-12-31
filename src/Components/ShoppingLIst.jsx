@@ -3,14 +3,14 @@ import { useEffect } from 'react';
 import ListItem from './LIstItem';
 
 // const items = [
-//   { id: crypto.randomUUID(), text: 'Yam', isEditing: false },
-//   { id: crypto.randomUUID(), text: 'Beans', isEditing: false },
-//   { id: crypto.randomUUID(), text: 'Rice', isEditing: true },
+//   { id: crypto.randomUUID(), text: 'Yam', isEditing: false, isChecked: true },
+//   { id: crypto.randomUUID(), text: 'Beans', isEditing: false, isChecked: true },
+//   { id: crypto.randomUUID(), text: 'Rice', isEditing: false, isChecked: false },
 // ];
 
 const ShoppingList = function () {
   const [inpValue, setInpValue] = useState('');
-  
+
   const [items, setItems] = useState(() => {
     const storedItems = JSON.parse(localStorage.getItem('items'));
     return storedItems ? storedItems : [];
@@ -34,7 +34,12 @@ const ShoppingList = function () {
     // Great, Functional Update Pattern for more safety
     setItems(prevItems => [
       ...prevItems,
-      { id: crypto.randomUUID(), text: inpValue.trim(), isEditing: false },
+      {
+        id: crypto.randomUUID(),
+        text: inpValue.trim(),
+        isEditing: false,
+        isChecked: false,
+      },
     ]);
 
     setInpValue('');
@@ -64,6 +69,38 @@ const ShoppingList = function () {
         else return item;
       })
     );
+  };
+
+  const handleItemCheck = function (id) {
+    setItems(prevItems => {
+      return prevItems.map(item => {
+        if (item.id === id) return { ...item, isChecked: !item.isChecked };
+        else return item;
+      });
+
+      /* // 1. Get the item
+      const checkedItem = prevItems.find(item => item.id === id);
+      console.log(checkedItem);
+
+      // 2. Filter the item from the list
+      const filteredItems = prevItems.filter(item => item.id !== id);
+
+      if (checkedItem.isChecked === true) {
+        // 3. Edit the isChecked property of the item
+        checkedItem.isChecked = false;
+
+        // 4. Add the item back, but to the top of the list
+        return [checkedItem, ...filteredItems]
+      }
+
+      if (checkedItem.isChecked === false) {
+        // 3. Edit the isChecked property of the item
+        checkedItem.isChecked = true;
+
+        // 4. Add the item back, but to the end of the list
+        return [...filteredItems, checkedItem];
+      } */
+    });
   };
 
   return (
@@ -99,6 +136,7 @@ const ShoppingList = function () {
               onDelete={handleItemDel}
               onEdit={handleItemEdit}
               onSubmit={handleItemSaveEdit}
+              onCheck={handleItemCheck}
             />
           ))}
         </ul>

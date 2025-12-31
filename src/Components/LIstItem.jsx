@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
 // prettier-ignore
-const ListItem = function ({ id, text, isEditing, onDelete, onEdit, onSubmit }) {
+const ListItem = function ({ id, text, isEditing, isChecked, onDelete, onEdit, onSubmit, onCheck }) {
   const [inpValue, setInpValue] = useState(text);
 
   const handleFormSubmit = function (e) {
@@ -18,7 +18,11 @@ const ListItem = function ({ id, text, isEditing, onDelete, onEdit, onSubmit }) 
       {/* View Mode */}
       {!isEditing && (
         <li className='flex justify-between items-center'>
-          <span className='p-0.5'>{text}</span>
+          {isChecked ? (
+            <del onClick={() => onCheck(id)} className='p-0.5 cursor-pointer'>{text}</del>
+          ) : (
+            <span onClick={() => onCheck(id)} className='p-0.5 cursor-pointer'>{text}</span>
+          )}
           <div className='flex gap-2'>
             <button
               onClick={() => onEdit(id)}
