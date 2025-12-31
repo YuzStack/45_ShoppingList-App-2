@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useEffect } from 'react';
 import ListItem from './LIstItem';
 
 // const items = [
@@ -10,6 +11,19 @@ import ListItem from './LIstItem';
 const ShoppingList = function () {
   const [inpValue, setInpValue] = useState('');
   const [items, setItems] = useState([]);
+
+  // Loads the data from localStorage
+  useEffect(function () {
+    const storedItems = JSON.parse(localStorage.getItem('items'));
+    if (storedItems && Array.isArray(storedItems) && storedItems.length !== 0)
+      setItems(storedItems);
+  }, []);
+
+  // Saves and updates the data in localStorage
+  useEffect(
+    () => localStorage.setItem('items', JSON.stringify(items)),
+    [items]
+  );
 
   const handleFormSubmit = function (e) {
     e.preventDefault();
