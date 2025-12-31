@@ -10,16 +10,13 @@ import ListItem from './LIstItem';
 
 const ShoppingList = function () {
   const [inpValue, setInpValue] = useState('');
-  const [items, setItems] = useState([]);
-
-  // Loads the data from localStorage
-  useEffect(function () {
+  
+  const [items, setItems] = useState(() => {
     const storedItems = JSON.parse(localStorage.getItem('items'));
-    if (storedItems && Array.isArray(storedItems) && storedItems.length !== 0)
-      setItems(storedItems);
-  }, []);
+    return storedItems ? storedItems : [];
+  });
 
-  // Saves and updates the data in localStorage
+  // Saves/Updates the data in localStorage everytime the value of state (items) changes
   useEffect(
     () => localStorage.setItem('items', JSON.stringify(items)),
     [items]
