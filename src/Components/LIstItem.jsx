@@ -12,6 +12,7 @@ const ListItem = function ({ id, text, isEditing, isChecked, onDelete, onEdit, o
 
     onSubmit(id, inpValue)
   };
+  console.log(isChecked)
 
   return (
     <>
@@ -19,9 +20,21 @@ const ListItem = function ({ id, text, isEditing, isChecked, onDelete, onEdit, o
       {!isEditing && (
         <li className='flex justify-between items-center'>
           {isChecked ? (
-            <del onClick={() => onCheck(id)} className='p-0.5 cursor-pointer'>{text}</del>
+            <div className='space-x-1'>
+              <input type='checkbox' checked onChange={() => onCheck(id)} />
+              <del className='p-0.5 cursor-pointer'>
+                {text}
+              </del>
+            </div>
           ) : (
-            <span onClick={() => onCheck(id)} className='p-0.5 cursor-pointer'>{text}</span>
+            <div className='space-x-1'>
+              <input type='checkbox' onChange={() => onCheck(id)} />
+              <span
+                className='p-0.5 cursor-pointer'
+              >
+                {text}
+              </span>
+            </div>
           )}
           <div className='flex gap-2'>
             <button
