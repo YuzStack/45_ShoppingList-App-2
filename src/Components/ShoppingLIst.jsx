@@ -46,10 +46,6 @@ const ShoppingList = function () {
   };
 
   const handleItemDel = function (id) {
-    // Good, but can be better
-    // setItems(items.filter(itm => itm.id !== id));
-
-    // Great, Functional Update Pattern for more safety
     setItems(prevItems => prevItems.filter(itm => itm.id !== id));
   };
 
@@ -78,6 +74,10 @@ const ShoppingList = function () {
         else return item;
       });
     });
+  };
+
+  const handleClearList = function () {
+    setItems([]);
   };
 
   const sortedItems = items
@@ -121,6 +121,15 @@ const ShoppingList = function () {
             />
           ))}
         </ul>
+
+        {items.length > 1 && (
+          <button
+            onClick={handleClearList}
+            className='bg-blue-600 py-0.5 px-1.5 float-right mt-2 rounded-lg'
+          >
+            Clear
+          </button>
+        )}
       </div>
     </div>
   );

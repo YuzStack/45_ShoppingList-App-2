@@ -12,7 +12,6 @@ const ListItem = function ({ id, text, isEditing, isChecked, onDelete, onEdit, o
 
     onSubmit(id, inpValue)
   };
-  console.log(isChecked)
 
   return (
     <>
