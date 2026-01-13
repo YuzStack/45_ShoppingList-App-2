@@ -77,31 +77,12 @@ const ShoppingList = function () {
         if (item.id === id) return { ...item, isChecked: !item.isChecked };
         else return item;
       });
-
-      /* // 1. Get the item
-      const checkedItem = prevItems.find(item => item.id === id);
-      console.log(checkedItem);
-
-      // 2. Filter the item from the list
-      const filteredItems = prevItems.filter(item => item.id !== id);
-
-      if (checkedItem.isChecked === true) {
-        // 3. Edit the isChecked property of the item
-        checkedItem.isChecked = false;
-
-        // 4. Add the item back, but to the top of the list
-        return [checkedItem, ...filteredItems]
-      }
-
-      if (checkedItem.isChecked === false) {
-        // 3. Edit the isChecked property of the item
-        checkedItem.isChecked = true;
-
-        // 4. Add the item back, but to the end of the list
-        return [...filteredItems, checkedItem];
-      } */
     });
   };
+
+  const sortedItems = items
+    .slice()
+    .sort((a, b) => Number(a.isChecked) - Number(b.isChecked));
 
   return (
     <div className='bg-[#111828] text-white h-screen px-3 py-2 flex justify-center'>
@@ -129,7 +110,7 @@ const ShoppingList = function () {
         </form>
 
         <ul className='list-items mt-[5vh] space-y-1.5'>
-          {items.map(item => (
+          {sortedItems.map(item => (
             <ListItem
               key={item.id}
               {...item}
