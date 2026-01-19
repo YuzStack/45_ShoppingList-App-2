@@ -1,7 +1,15 @@
 import { useState } from 'react';
 
-// prettier-ignore
-const ListItem = function ({ id, text, isEditing, isChecked, onDelete, onEdit, onSubmit, onCheck }) {
+const ListItem = function ({
+  id,
+  text,
+  isEditing,
+  isChecked,
+  onDelete,
+  onEdit,
+  onSubmit,
+  onCheck,
+}) {
   const [inpValue, setInpValue] = useState(text);
 
   const handleFormSubmit = function (e) {
@@ -10,32 +18,29 @@ const ListItem = function ({ id, text, isEditing, isChecked, onDelete, onEdit, o
     // Prevent adding empty strings or just whitespace(s)
     if (!inpValue.trim()) return;
 
-    onSubmit(id, inpValue)
+    onSubmit(id, inpValue);
   };
 
   return (
     <>
       {/* View Mode */}
       {!isEditing && (
-        <li className='flex justify-between items-center'>
-          {isChecked ? (
-            <div className='space-x-1'>
-              <input type='checkbox' checked onChange={() => onCheck(id)} />
-              <del className='p-0.5 cursor-pointer'>
-                {text}
-              </del>
-            </div>
-          ) : (
-            <div className='space-x-1'>
-              <input type='checkbox' onChange={() => onCheck(id)} />
-              <span
-                className='p-0.5 cursor-pointer'
-              >
-                {text}
-              </span>
-            </div>
-          )}
-          <div className='flex gap-2'>
+        <li className='flex justify-between items-center '>
+          <label className='flex items-center gap-1'>
+            <input
+              type='checkbox'
+              checked={isChecked}
+              onChange={() => onCheck(id)}
+            />
+
+            <span
+              className={`p-0.5 cursor-pointer ${isChecked ? 'line-through' : ''}`}
+            >
+              {text}
+            </span>
+          </label>
+
+          <div className='flex items-center gap-2'>
             <button
               onClick={() => onEdit(id)}
               className='p-0.5 text-xl font-semibold cursor-pointer'
