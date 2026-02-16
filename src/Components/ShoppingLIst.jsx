@@ -19,7 +19,7 @@ const ShoppingList = function () {
   // Saves/Updates the data in localStorage everytime the value of state (items) changes
   useEffect(
     () => localStorage.setItem('items', JSON.stringify(items)),
-    [items]
+    [items],
   );
 
   const handleFormSubmit = function (e) {
@@ -54,7 +54,7 @@ const ShoppingList = function () {
       prevItems.map(item => {
         if (item.id === id) return { ...item, isEditing: true };
         else return item;
-      })
+      }),
     );
   };
 
@@ -63,7 +63,7 @@ const ShoppingList = function () {
       prevItems.map(item => {
         if (item.id === id) return { ...item, text, isEditing: false };
         else return item;
-      })
+      }),
     );
   };
 
@@ -77,7 +77,9 @@ const ShoppingList = function () {
   };
 
   const handleClearList = function () {
-    setItems([]);
+    const confirm = window.confirm('Are you sure you want to clear the list?');
+
+    if (confirm) setItems([]);
   };
 
   const sortedItems = items
