@@ -87,7 +87,7 @@ const ShoppingList = function () {
     .sort((a, b) => Number(a.isChecked) - Number(b.isChecked));
 
   return (
-    <div className=' h-screen px-3 py-2 flex justify-center'>
+    <div className='h-dvh px-3 py-2 flex justify-center'>
       <div className='space-y-3'>
         <h1 className='text-3xl font-semibold text-center mb-[10vh]'>
           Shopping List App
@@ -111,7 +111,7 @@ const ShoppingList = function () {
           </button>
         </form>
 
-        <ul className='list-items mt-[5vh] space-y-1.5'>
+        <ul className='mt-[5dvh] space-y-1.5'>
           {sortedItems.map(item => (
             <ListItem
               key={item.id}
