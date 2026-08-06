@@ -87,7 +87,7 @@ const ShoppingList = function () {
     .sort((a, b) => Number(a.isChecked) - Number(b.isChecked));
 
   return (
-    <div className='bg-[#111828] text-white h-screen px-3 py-2 flex justify-center'>
+    <div className=' h-screen px-3 py-2 flex justify-center'>
       <div className='space-y-3'>
         <h1 className='text-3xl font-semibold text-center mb-[10vh]'>
           Shopping List App
